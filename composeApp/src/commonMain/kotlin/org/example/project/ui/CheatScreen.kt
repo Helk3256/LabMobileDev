@@ -6,22 +6,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import labmobiledev.composeapp.generated.resources.Res
-import labmobiledev.composeapp.generated.resources.false_button
-import labmobiledev.composeapp.generated.resources.show_answer_button
-import labmobiledev.composeapp.generated.resources.true_button
-import labmobiledev.composeapp.generated.resources.warning_text
+import labmobiledev.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CheatScreen(
     answerIsTrue: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var answerShown by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -43,9 +41,7 @@ fun CheatScreen(
             } else {
                 Spacer(Modifier.height(48.dp))
             }
-            Button(onClick = {
-                answerShown = true
-            }) {
+            Button(onClick = { showDialog = true }) {
                 Text(stringResource(Res.string.show_answer_button))
             }
             if (answerShown) {
@@ -54,5 +50,26 @@ fun CheatScreen(
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(stringResource(Res.string.cheat_dialog_title)) },
+            text = { Text(stringResource(Res.string.cheat_dialog_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    answerShown = true
+                    showDialog = false
+                }) {
+                    Text(stringResource(Res.string.cheat_dialog_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text(stringResource(Res.string.cheat_dialog_dismiss))
+                }
+            }
+        )
     }
 }

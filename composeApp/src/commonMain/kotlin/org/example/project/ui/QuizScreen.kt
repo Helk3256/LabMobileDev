@@ -1,56 +1,27 @@
 package org.example.project.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
-import labmobiledev.composeapp.generated.resources.Res
-import labmobiledev.composeapp.generated.resources.arrow_left
-import labmobiledev.composeapp.generated.resources.arrow_right
-import labmobiledev.composeapp.generated.resources.back_button
-import labmobiledev.composeapp.generated.resources.cheat_button
-import labmobiledev.composeapp.generated.resources.correct_toast
-import labmobiledev.composeapp.generated.resources.false_button
-import labmobiledev.composeapp.generated.resources.incorrect_toast
-import labmobiledev.composeapp.generated.resources.judgment_toast
-import labmobiledev.composeapp.generated.resources.next_button
-import labmobiledev.composeapp.generated.resources.true_button
+import labmobiledev.composeapp.generated.resources.*
 import org.example.project.quiz.QuizGameState
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun QuizScreen(
     state: QuizGameState,
-    onShowCheat: () -> Unit
+    onShowCheat: () -> Unit,
+    snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier,
+    cheatEnabled: Boolean = true
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    // Ключ сообщения, которое нужно показать (устанавливается при клике на кнопку)
     var toastKey by remember { mutableStateOf<String?>(null) }
 
-    // Преобразуем ключ в реальную строку, используя stringResource в composable-контексте
     val toastMessage = toastKey?.let { key ->
         when (key) {
             "correct_toast" -> stringResource(Res.string.correct_toast)
@@ -59,7 +30,6 @@ fun QuizScreen(
             else -> ""
         }
     }
-
 
     LaunchedEffect(toastMessage) {
         toastMessage?.let {
@@ -76,7 +46,7 @@ fun QuizScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -117,7 +87,10 @@ fun QuizScreen(
                         contentDescription = stringResource(Res.string.back_button)
                     )
                 }
-                Button(onClick = onShowCheat) {
+                Button(
+                    onClick = onShowCheat,
+                    enabled = cheatEnabled
+                ) {
                     Text(stringResource(Res.string.cheat_button))
                 }
                 IconButton(onClick = state::moveToNext) {
@@ -128,9 +101,5 @@ fun QuizScreen(
                 }
             }
         }
-        SnackbarHost(
-            hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
     }
 }

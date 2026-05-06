@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LabMobileDev</string>
+    <string name="app_name">GeoQuiz</string>
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="cheat_button">Cheat!</string>
@@ -12,8 +12,22 @@
     <string name="judgment_toast">Cheater!</string>
     <string name="question_australia">Does Australia have kangaroos?</string>
     <string name="question_oceans">Is the Pacific Ocean the largest?</string>
-    <string name="question_mideast">The Suez Canal connects the Red Sea and the Indian Ocean.</string>
-    <string name="question_africa">The source of the Nile River is in Egypt.</string>
-    <string name="question_americas">The Amazon River is the longest river in the Americas.</string>
-    <string name="question_asia">Lake Baikal is the world\'s oldest and deepest freshwater lake.</string>
+    <string name="question_mideast">Is the Middle East in Asia?</string>
+    <string name="question_africa">Is Africa a country?</string>
+    <string name="question_americas">Are the Americas one continent?</string>
+    <string name="question_asia">Is China in South Asia?</string>
+
+    <!-- About screen -->
+    <string name="about_title">About GeoQuiz</string>
+    <string name="about_description">GeoQuiz is a simple geography quiz app built with Kotlin Multiplatform and Compose. It demonstrates modern UI development techniques, state management, and adaptive design.</string>
+
+    <!-- Cheat confirmation dialog -->
+    <string name="cheat_dialog_title">Reveal Answer?</string>
+    <string name="cheat_dialog_message">Showing the answer will mark this question as cheated. Your answer won\'t count.</string>
+    <string name="cheat_dialog_confirm">Yes, show answer</string>
+    <string name="cheat_dialog_dismiss">Cancel</string>
+
+    <!-- Navigation -->
+    <string name="nav_quiz">Quiz</string>
+    <string name="nav_about">About</string>
 </resources>
